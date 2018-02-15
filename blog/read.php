@@ -32,7 +32,7 @@
                         WHERE users.id = article.user_id
                         AND article.article_title LIKE '%".$searchArticle."%'
                         OR article.article LIKE '%".$searchArticle."%'
-                        ORDER BY article.id DESC";
+                        ORDER BY article.date DESC";
                 $result = mysqli_query($connection, $sql);
                 while($row = mysqli_fetch_array($result))
                 {
@@ -83,6 +83,10 @@
                 <option value="">Show All Articles</option>
                 <?php echo fill_category($connection); ?>
             </select>
+                <select name="month" id="month">
+                    <option value="" selected disabled>Zoek op maand</option>
+                    <?php echo selectMonth(); ?>
+                </select>
             <input style="float: right" type="search" name="searchArticle" placeholder="search here...">
             </form>
                 <br /><br />
@@ -95,6 +99,7 @@
 
 </body>
 <script>
+    //-----SELECT ARTICLES ON CATEGORY
     function loadData(select){
         var category_id = select.val();
         $.ajax({
@@ -112,5 +117,23 @@
         });
 
         loadData($("#category"));
+    });
+
+    //------------------SELECT ARTICLE ON MONTH
+    $(document).ready(function(){ /* PREPARE THE SCRIPT */
+        $("#month").change(function(){ /* WHEN YOU CHANGE AND SELECT FROM THE SELECT FIELD */
+            var month_id = $(this).val(); /* GET THE VALUE OF THE SELECTED DATA */
+            //var dataString = "allbooks="+allbooks; /* STORE THAT TO A DATA STRING */
+
+            $.ajax({ /* THEN THE AJAX CALL */
+                type: "POST", /* TYPE OF METHOD TO USE TO PASS THE DATA */
+                url: "post-month.php", /* PAGE WHERE WE WILL PASS THE DATA */
+                data: {month_id:month_id}, /* THE DATA WE WILL BE PASSING */
+                success: function(result){ /* GET THE TO BE RETURNED DATA */
+                    $("#show_articles").html(result); /* THE RETURNED DATA WILL BE SHOWN IN THIS DIV */
+                }
+            });
+
+        });
     });
 </script>
