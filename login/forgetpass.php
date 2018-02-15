@@ -42,7 +42,7 @@ try {
     $mail->Host = 'mail.mijndomein.nl';                   // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
     $mail->Username = 'blog@ginojoanroy.nl';              // SMTP username
-    $mail->Password = 'Davecte22';                                 // SMTP password
+    $mail->Password = '*****';                                 // SMTP password
     $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 465;                                    // TCP port to connect to
 
